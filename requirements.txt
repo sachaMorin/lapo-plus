@@ -1,0 +1,15 @@
+numpy
+torch
+torchvision
+doy==1.9.2
+gym==0.23.1
+tensordict
+funcy
+tqdm
+omegaconf
+wandb
+matplotlib
+rich
+torchinfo
+procgen # procgen package for python 3.11 and 3.12, for other versions use "procgen"
+gdown

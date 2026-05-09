@@ -1,0 +1,11 @@
+__pycache__/
+venv/
+.venv/
+wandb/
+exp_results/
+lapo/expert_data/
+lapo/expert_data
+lapo/exp_results/
+lapo/exp_results
+expert_data/
+expert_data
