@@ -2,7 +2,7 @@
 
 This repository contains the code for **LAPO+** introduced in our ICML 2026 paper [*On the Sample Efficiency of Inverse Dynamics Models for Semi-Supervised Imitation Learning*](https://arxiv.org/abs/2602.02762). This code is adapted from the original [LAPO](https://arxiv.org/abs/2312.10812) [codebase](https://github.com/schmidtdominik/LAPO).
 
-## Method overview
+## Methods overview
 
 The following methods learn Procgen policies offline using a large unlabeled dataset $\mathcal{D_U}$ and a small action-labeled dataset $\mathcal{D_L}$.
 
@@ -195,43 +195,14 @@ python train_lapo_plus_stage3.py \
 
 The `n_observed_samples`, `freeze_backbone`, and `idm_only` flags must match the values used in Stage 1.
 
-## Running on all 16 Procgen environments (SLURM)
-
-The `mila_launch_*.sh` scripts in the repo root are SLURM array jobs that sweep all 16 Procgen tasks (one task per array index, see the `tasks` map inside each script). They are written for the Mila cluster — adjust the `#SBATCH` headers (partition, GPU type, `module load`) for your environment. The repo and virtualenv locations can be overridden without editing the scripts:
-
-```bash
-export LAPO_DIR=/path/to/LAPO        # default: $HOME/vla_wm/LAPO
-export LAPO_VENV=/path/to/lapo-venv  # default: $HOME/venvs/lapo
-```
-
-```bash
-# LAPO Stage 1 + Stage 2 (one array task per env, single seed)
-sbatch mila_launch_lapo_stage1_2.sh <sweep_name>
-
-# LAPO Stage 3, sweeping over 3 seeds × 14 dataset sizes
-# args: <sweep_name> <freeze_backbone> <lr> <steps> <bc_only>
-sbatch mila_launch_lapo_stage3.sh  <sweep_name> true  2e-4 10000 false
-
-# LAPO+ Stage 2 + Stage 3, one job per seed
-# args: <sweep_name> <freeze_backbone> <lr> <steps> <idm_only> <seed>
-sbatch mila_launch_lapo_plus_stage2_3.sh <sweep_name> true  2e-4 10000 false 11
-
-# BC
-# args: <sweep_name> <freeze_backbone> <lr> <steps> <bc_only>
-sbatch mila_launch_lapo_stage3.sh   <sweep_name> false 2e-4 120000 true
-
-# IDM labeling
-# args: <sweep_name> <freeze_backbone> <lr> <steps> <bc_only>
-sbatch mila_launch_lapo_plus_stage2_3.sh <sweep_name> false 2e-4 60000 true 11
-```
-
-`<sweep_name>` is an arbitrary tag — experiment directories are named `<array_index>_<sweep_name>` and the same name is reused across stages so checkpoints chain together.
-
-Each Stage 3 / LAPO+ job loops internally over the seeds in `SEEDS=(...)` and the dataset sizes in `OBSERVED_SAMPLES=(16 32 64 ... 524288 -1)`. Edit those arrays inside the scripts to change the sweep. By default Stage 3 jobs run all three seeds (11, 22, 33) sequentially in a single SLURM task; the LAPO+ script splits seeds into separate jobs because it takes longer.
 
 ## Logging
 
-All scripts log to [Weights & Biases](https://wandb.ai/) under different projects for each stage  (e.g., `lapo_stage1`, `lapo_stage2`). Some SLURM scripts run wandb in offline mode and move the logs out of `/tmp` to `$SCRATCH/wandb_logs/...` when the job finishes (Mila-specific — set `$SCRATCH` to a writable path, or edit the `mv` target at the bottom of each script).
+All scripts log to [Weights & Biases](https://wandb.ai/) under different projects for each stage  (e.g., `lapo_stage1`, `lapo_stage2`). Set `WANDB_MODE=disabled` to avoid logging.
+
+## SLURM Launch Scripts
+
+Our SLURM launch scripts to train on all environments are available on the `slurm` branch for reference. They will have to be adapted to your environment.
 
 ## Citation
 
