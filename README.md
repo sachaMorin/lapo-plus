@@ -83,7 +83,8 @@ We use a single `exp_name` to share the LIDM-LFDM checkpoint across LAPO and LAP
 python train_lapo_stage1.py \
     env_name=bigfish \
     seed=11 \
-    exp_name=demo
+    exp_name=demo \
+    lapo_stage1.steps=50000
 ```
 
 This writes `exp_results/demo/lapo_stage1_idm_fdm.pt`.
@@ -94,7 +95,8 @@ This writes `exp_results/demo/lapo_stage1_idm_fdm.pt`.
 python train_lapo_stage2.py \
     env_name=bigfish \
     seed=11 \
-    exp_name=demo
+    exp_name=demo \
+    lapo_stage2.steps=60000
 ```
 
 This loads the Stage 1 checkpoint and writes `exp_results/demo/lapo_stage2_latent_policy.pt`.
@@ -109,8 +111,8 @@ python train_lapo_stage3.py \
     lapo_stage3.n_observed_samples=4000 \
     lapo_stage3.freeze_backbone=true \
     lapo_stage3.lr=2e-4 \
-    lapo_stage3.steps=10000 \
-    lapo_stage3.bc_only=false
+    lapo_stage3.bc_only=false \
+    lapo_stage3.steps=10000
 ```
 
 Key arguments:
@@ -131,8 +133,8 @@ python train_lapo_plus_stage2.py \
     lapo_plus_stage2.n_observed_samples=4000 \
     lapo_plus_stage2.freeze_backbone=true \
     lapo_plus_stage2.lr=2e-4 \
-    lapo_plus_stage2.steps=10000 \
-    lapo_plus_stage2.idm_only=false
+    lapo_plus_stage2.idm_only=false \
+    lapo_plus_stage2.steps=10000
 ```
 
 **Stage 3 — IDM labeling:**
@@ -144,10 +146,11 @@ python train_lapo_plus_stage3.py \
     exp_name=demo \
     lapo_plus_stage2.n_observed_samples=4000 \
     lapo_plus_stage2.freeze_backbone=true \
-    lapo_plus_stage2.idm_only=false
+    lapo_plus_stage2.idm_only=false \
+    lapo_plus_stage3.steps=60000
 ```
 
-Stage 3 reads the matching Stage 2 checkpoint, so the `n_observed_samples`, `freeze_backbone`, and `idm_only` flags must match the values used in Stage 2. Stage-3-specific hyperparameters (e.g. `lapo_plus_stage3.steps`, `lr`) are read from `config.yaml`.
+Stage 3 reads the matching Stage 2 checkpoint, so the `n_observed_samples`, `freeze_backbone`, and `idm_only` flags must match the values used in Stage 2. Stage-3-specific hyperparameters (e.g. `lapo_plus_stage3.lr`) are read from `config.yaml`.
 
 ### BC
 
@@ -161,8 +164,8 @@ python train_lapo_stage3.py \
     lapo_stage3.n_observed_samples=4000 \
     lapo_stage3.freeze_backbone=false \
     lapo_stage3.lr=2e-4 \
-    lapo_stage3.steps=10000 \
-    lapo_stage3.bc_only=true
+    lapo_stage3.bc_only=true \
+    lapo_stage3.steps=120000
 ```
 
 ### IDM Labeling
@@ -177,8 +180,8 @@ python train_lapo_plus_stage2.py \
     lapo_plus_stage2.n_observed_samples=4000 \
     lapo_plus_stage2.freeze_backbone=false \
     lapo_plus_stage2.lr=2e-4 \
-    lapo_plus_stage2.steps=10000 \
-    lapo_plus_stage2.idm_only=true
+    lapo_plus_stage2.idm_only=true \
+    lapo_plus_stage2.steps=60000
 ```
 
 **Stage 2 — IDM labeling:**
@@ -190,7 +193,8 @@ python train_lapo_plus_stage3.py \
     exp_name=demo \
     lapo_plus_stage2.n_observed_samples=4000 \
     lapo_plus_stage2.freeze_backbone=false \
-    lapo_plus_stage2.idm_only=true
+    lapo_plus_stage2.idm_only=true \
+    lapo_plus_stage3.steps=60000
 ```
 
 The `n_observed_samples`, `freeze_backbone`, and `idm_only` flags must match the values used in Stage 1.
