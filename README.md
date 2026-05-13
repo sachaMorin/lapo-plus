@@ -5,6 +5,9 @@ Code for **LAPO+** and the Procgen experiments from our ICML 2026 paper [On the 
 This codebase was originally a fork of the [LAPO repo](https://github.com/schmidtdominik/LAPO). See also the [LAPO Paper](https://arxiv.org/abs/2312.10812).
 
 
+<img src="media/procgen.png" width="60%">
+
+
 ## Methods overview
 
 The following methods learn Procgen policies offline using a large unlabeled dataset $\mathcal{D_U}$ and a small action-labeled dataset $\mathcal{D_L}$.
