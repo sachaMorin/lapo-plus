@@ -1,6 +1,9 @@
-# LAPO+
+# On the Sample Efficiency of Inverse Dynamics Models for Semi-Supervised Imitation Learning: LAPO+ and Procgen Experiments
 
-This repository contains the code for **LAPO+** introduced in our ICML 2026 paper [*On the Sample Efficiency of Inverse Dynamics Models for Semi-Supervised Imitation Learning*](https://arxiv.org/abs/2602.02762). This code is adapted from the original [LAPO](https://arxiv.org/abs/2312.10812) [codebase](https://github.com/schmidtdominik/LAPO).
+Code for **LAPO+** and the Procgen experiments from our ICML 2026 paper [On the Sample Efficiency of Inverse Dynamics Models for Semi-Supervised Imitation Learning](https://arxiv.org/abs/2602.02762). 
+
+This codebase was originally a fork of the [LAPO repo](https://github.com/schmidtdominik/LAPO). See also the [LAPO Paper](https://arxiv.org/abs/2312.10812).
+
 
 ## Methods overview
 
